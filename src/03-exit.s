@@ -13,8 +13,8 @@
 #
 
 # VARIABLES:
-#               %rax holds the system call number.
-#               %rbx holds the return status.
+#               %eax holds the system call number.
+#               %ebx holds the return status.
 #
 
 .section .data
@@ -22,7 +22,7 @@
 .section .text
 .global _start
 _start:
-movq $1, %rax   # Store exit syscall.
-movq $0, %rbx   # Return status.
-int $0x80       # Interrupt for syscall.
+movl $1, %eax           # system call number
+movl $0, %ebx           # status number
+int $0x80               # interrupt for syscall
 

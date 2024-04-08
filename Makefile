@@ -2,7 +2,7 @@ all: exit max power
 
 exit: build build/exit build/exit-64
 max: build build/max build/max-64
-power: build build/power
+power: build build/power build/power-64
 
 build:
 	mkdir build
@@ -22,6 +22,9 @@ build/max-64: src/03-max-64.s
 build/power: src/04-power.s
 	as --32 -o build/power.o src/04-power.s
 	ld -m elf_i386 -o build/power build/power.o
+build/power-64: src/04-power-64.s
+	as -o build/power-64.o src/04-power-64.s
+	ld -o build/power-64 build/power-64.o
 
 test-exit:
 	build/exit; echo $$?
@@ -33,4 +36,6 @@ test-max-64:
 	build/max-64; echo $$?
 test-power:
 	build/power; echo $$?
+test-power-64:
+	build/power-64; echo $$?
 

@@ -1,7 +1,7 @@
 all: exit max
 
 exit: build build/exit build/exit-64
-max: build build/max
+max: build build/max build/max-64
 
 build:
 	mkdir build
@@ -15,6 +15,9 @@ build/exit-64: src/03-exit-64.s
 build/max: src/03-max.s
 	as --32 -o build/max.o src/03-max.s
 	ld -m elf_i386 -o build/max build/max.o
+build/max-64: src/03-max-64.s
+	as -o build/max-64.o src/03-max-64.s
+	ld -o build/max-64 build/max-64.o
 
 test-exit:
 	build/exit; echo $$?
@@ -22,4 +25,6 @@ test-exit-64:
 	build/exit-64; echo $$?
 test-max:
 	build/max; echo $$?
+test-max-64:
+	build/max-64; echo $$?
 

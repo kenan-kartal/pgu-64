@@ -39,5 +39,5 @@ jmp start_loop
 loop_exit:
 movl $60, %eax                  # Store exit syscall.
 movl %ebx, %edi                 # Store return value.
-syscall                         # Syscall.
+syscall
 

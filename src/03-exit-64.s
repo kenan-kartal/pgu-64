@@ -24,5 +24,5 @@
 _start:
 movl $60, %eax          # system call number
 movl $0, %edi           # status number
-syscall                 # interrupt for syscall
+syscall
 

@@ -2,7 +2,8 @@
 
 This repository contains the x86-64 implementation of the code from Jonathan Bartlett's "Programming from the Ground Up" (2003).
 
-Original source code is written for x86. I have rewritten it for x86-64, GNU/Linux.
+Original source code is written for x86. I have rewritten it for x86-64, GNU/Linux,
+following C ABI calling convention.
 
 Make files for building and testing are included.
 

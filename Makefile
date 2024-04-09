@@ -4,7 +4,7 @@ exit: build build/exit build/exit-64
 max: build build/max build/max-64
 power: build build/power build/power-64
 factorial: build build/factorial build/factorial-64
-toupper: build build/toupper
+toupper: build build/toupper build/toupper-64
 
 build:
 	mkdir build
@@ -36,6 +36,9 @@ build/factorial-64: src/04-factorial-64.s
 build/toupper: src/05-toupper.s
 	as --32 -o build/toupper.o src/05-toupper.s
 	ld -m elf_i386 -o build/toupper build/toupper.o
+build/toupper-64: src/05-toupper-64.s
+	as -o build/toupper-64.o src/05-toupper-64.s
+	ld -o build/toupper-64 build/toupper-64.o
 
 test-exit:
 	build/exit; echo $$?
@@ -58,4 +61,9 @@ test-toupper:
 	echo "iT's aLl uppErCaSE!\n" > build/toupper_in
 	build/toupper build/toupper_in build/toupper_out
 	cat build/toupper_out
+test-toupper-64:
+	-rm build/toupper-64_out
+	echo "iT's aLl uppErCaSE!\n" > build/toupper-64_in
+	build/toupper-64 build/toupper-64_in build/toupper-64_out
+	cat build/toupper-64_out
 

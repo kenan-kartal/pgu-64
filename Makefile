@@ -6,7 +6,8 @@ power: build build/power build/power-64
 factorial: build build/factorial build/factorial-64
 toupper: build build/toupper build/toupper-64
 record: build build/readrec.o build/writerec.o\
-	build/count-chars.o build/writerecs
+	build/count-chars.o build/write-newline.o\
+	build/writerecs
 
 build:
 	mkdir build
@@ -51,6 +52,8 @@ build/writerecs: src/06-writerecs.s
 		build/writerec.o build/writerecs.o
 build/count-chars.o: src/06-count-chars.s
 	as --32 -I inc -o build/count-chars.o src/06-count-chars.s
+build/write-newline.o: src/06-write-newline.s
+	as --32 -I inc -o build/write-newline.o src/06-write-newline.s
 
 test-exit:
 	build/exit; echo $$?

@@ -7,7 +7,7 @@ factorial: build build/factorial build/factorial-64
 toupper: build build/toupper build/toupper-64
 record: build build/readrec.o build/writerec.o\
 	build/count-chars.o build/write-newline.o\
-	build/writerecs
+	build/writerecs build/readrecs
 
 build:
 	mkdir build
@@ -54,6 +54,11 @@ build/count-chars.o: src/06-count-chars.s
 	as --32 -I inc -o build/count-chars.o src/06-count-chars.s
 build/write-newline.o: src/06-write-newline.s
 	as --32 -I inc -o build/write-newline.o src/06-write-newline.s
+build/readrecs: src/06-readrecs.s
+	as --32 -I inc -o build/readrecs.o src/06-readrecs.s
+	ld -m elf_i386 -o build/readrecs\
+		build/readrec.o build/count-chars.o build/write-newline.o\
+		build/readrecs.o
 
 test-exit:
 	build/exit; echo $$?
@@ -85,4 +90,6 @@ test-writerecs:
 	-rm build/recs.dat
 	build/writerecs
 	cat build/recs.dat; echo ''
+test-readrecs:
+	build/readrecs
 

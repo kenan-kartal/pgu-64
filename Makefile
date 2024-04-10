@@ -5,7 +5,7 @@ max: build build/max build/max-64
 power: build build/power build/power-64
 factorial: build build/factorial build/factorial-64
 toupper: build build/toupper build/toupper-64
-record: build build/writerec.o
+record: build build/readrec.o build/writerec.o
 
 build:
 	mkdir build
@@ -40,6 +40,8 @@ build/toupper: src/05-toupper.s
 build/toupper-64: src/05-toupper-64.s
 	as -o build/toupper-64.o src/05-toupper-64.s
 	ld -o build/toupper-64 build/toupper-64.o
+build/readrec.o: src/06-readrec.s
+	as --32 -I inc -o build/readrec.o src/06-readrec.s
 build/writerec.o: src/06-writerec.s
 	as --32 -I inc -o build/writerec.o src/06-writerec.s
 

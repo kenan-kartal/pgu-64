@@ -49,6 +49,8 @@ file_name:
 
         .equ ST_FILE_DESCRIPTOR, -4
 
+.section .text
+
 .global _start
 _start:
         movl %esp, %ebp

@@ -11,6 +11,8 @@
 #               %edx - current character address
 #
 
+.section .text
+
 .type count_chars, @function
 .global count_chars
 # This is where our one parameter is on the stack

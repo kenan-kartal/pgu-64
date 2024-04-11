@@ -7,7 +7,7 @@ factorial: build build/factorial build/factorial-64
 toupper: build build/toupper build/toupper-64
 record: build build/readrec.o build/writerec.o\
 	build/count-chars.o build/write-newline.o\
-	build/writerecs build/readrecs
+	build/writerecs build/readrecs build/add-year
 
 build:
 	mkdir build
@@ -59,6 +59,10 @@ build/readrecs: src/06-readrecs.s
 	ld -m elf_i386 -o build/readrecs\
 		build/readrec.o build/count-chars.o build/write-newline.o\
 		build/readrecs.o
+build/add-year: src/06-add-year.s
+	as --32 -I inc -o build/add-year.o src/06-add-year.s
+	ld -m elf_i386 -o build/add-year\
+		build/readrec.o build/writerec.o build/add-year.o
 
 test-exit:
 	build/exit; echo $$?
@@ -92,4 +96,11 @@ test-writerecs:
 	cat build/recs.dat; echo ''
 test-readrecs:
 	build/readrecs
+test-add-year:
+	-rm build/recs2.dat
+	hexdump -e '"Name: " 2/40 "%s " "\n" "Address: " 1/240 "%s" "\n" "Age: " "%d\n"'\
+		build/recs.dat
+	build/add-year
+	hexdump -e '"Name: " 2/40 "%s " "\n" "Address: " 1/240 "%s" "\n" "Age: " "%d\n"'\
+		build/recs2.dat
 

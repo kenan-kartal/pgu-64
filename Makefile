@@ -8,7 +8,8 @@ toupper: build build/toupper build/toupper-64
 record: build build/readrec.o build/writerec.o\
 	build/count-chars.o build/write-newline.o\
 	build/writerecs build/readrecs build/add-year\
-	build/readrec-64.o build/writerec-64.o
+	build/readrec-64.o build/writerec-64.o\
+	build/writerecs-64
 
 build:
 	mkdir build
@@ -68,6 +69,10 @@ build/readrec-64.o: src/06-readrec-64.s
 	as -I inc -o build/readrec-64.o src/06-readrec-64.s
 build/writerec-64.o: src/06-writerec-64.s
 	as -I inc -o build/writerec-64.o src/06-writerec-64.s
+build/writerecs-64: src/06-writerecs-64.s
+	as -I inc -o build/writerecs-64.o src/06-writerecs-64.s
+	ld -o build/writerecs-64\
+		build/writerecs-64.o build/writerec-64.o
 
 test-exit:
 	build/exit; echo $$?
@@ -109,4 +114,9 @@ test-add-year:
 	build/add-year
 	hexdump -e '"Name: " 2/40 "%s " "\n" "Address: " 1/240 "%s" "\n" "Age: " "%d\n"'\
 		build/recs2.dat
+test-writerecs-64:
+	-rm build/recs-64.dat
+	build/writerecs-64
+	hexdump -e '"Name: " 2/40 "%s " "\n" "Address: " 1/240 "%s" "\n" "Age: " "%d\n"'\
+		build/recs-64.dat
 

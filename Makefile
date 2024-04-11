@@ -8,7 +8,7 @@ toupper: build build/toupper build/toupper-64
 record: build build/readrec.o build/writerec.o\
 	build/count-chars.o build/write-newline.o\
 	build/writerecs build/readrecs build/add-year\
-	build/readrec-64.o
+	build/readrec-64.o build/writerec-64.o
 
 build:
 	mkdir build
@@ -66,6 +66,8 @@ build/add-year: src/06-add-year.s
 		build/readrec.o build/writerec.o build/add-year.o
 build/readrec-64.o: src/06-readrec-64.s
 	as -I inc -o build/readrec-64.o src/06-readrec-64.s
+build/writerec-64.o: src/06-writerec-64.s
+	as -I inc -o build/writerec-64.o src/06-writerec-64.s
 
 test-exit:
 	build/exit; echo $$?

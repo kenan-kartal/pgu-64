@@ -47,14 +47,14 @@ build/readrec.o: src/06-readrec.s
 	as --32 -I inc -o build/readrec.o src/06-readrec.s
 build/writerec.o: src/06-writerec.s
 	as --32 -I inc -o build/writerec.o src/06-writerec.s
-build/writerecs: src/06-writerecs.s
-	as --32 -I inc -o build/writerecs.o src/06-writerecs.s
-	ld -m elf_i386 -o build/writerecs\
-		build/writerec.o build/writerecs.o
 build/count-chars.o: src/06-count-chars.s
 	as --32 -I inc -o build/count-chars.o src/06-count-chars.s
 build/write-newline.o: src/06-write-newline.s
 	as --32 -I inc -o build/write-newline.o src/06-write-newline.s
+build/writerecs: src/06-writerecs.s
+	as --32 -I inc -o build/writerecs.o src/06-writerecs.s
+	ld -m elf_i386 -o build/writerecs\
+		build/writerec.o build/writerecs.o
 build/readrecs: src/06-readrecs.s
 	as --32 -I inc -o build/readrecs.o src/06-readrecs.s
 	ld -m elf_i386 -o build/readrecs\

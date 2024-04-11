@@ -72,6 +72,8 @@ build/writerec-64.o: src/06-writerec-64.s
 	as -I inc -o build/writerec-64.o src/06-writerec-64.s
 build/count-chars-64.o: src/06-count-chars-64.s
 	as -I inc -o build/count-chars-64.o src/06-count-chars-64.s
+build/write-newline-64.o: src/06-write-newline-64.s
+	as -I inc -o build/write-newline-64.o src/06-write-newline-64.s
 build/writerecs-64: src/06-writerecs-64.s\
 		build/writerec-64.o
 	as -I inc -o build/writerecs-64.o src/06-writerecs-64.s

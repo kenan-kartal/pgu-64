@@ -93,7 +93,8 @@ test-toupper-64:
 test-writerecs:
 	-rm build/recs.dat
 	build/writerecs
-	cat build/recs.dat; echo ''
+	hexdump -e '"Name: " 2/40 "%s " "\n" "Address: " 1/240 "%s" "\n" "Age: " "%d\n"'\
+		build/recs.dat
 test-readrecs:
 	build/readrecs
 test-add-year:

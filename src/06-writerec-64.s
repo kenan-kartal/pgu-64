@@ -15,16 +15,10 @@
 .global write_record
 .type write_record, @function
 write_record:
-        pushq %rbp
-        movq %rsp, %rbp
-
         movq $SYS_WRITE, %rax
         # File descriptor is already in rdi
         # Buffer is already in rsi
         movq $RECORD_SIZE, %rdx
         syscall
-
-        movq %rbp, %rsp
-        popq %rbp
         ret
 

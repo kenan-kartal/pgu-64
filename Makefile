@@ -5,10 +5,8 @@ max: build build/max build/max-64
 power: build build/power build/power-64
 factorial: build build/factorial build/factorial-64
 toupper: build build/toupper build/toupper-64
-record: build build/readrec.o build/writerec.o\
-	build/count-chars.o build/write-newline.o\
+record: build\
 	build/writerecs build/readrecs build/add-year\
-	build/readrec-64.o build/writerec-64.o\
 	build/writerecs-64
 
 build:
@@ -52,16 +50,19 @@ build/count-chars.o: src/06-count-chars.s
 	as --32 -I inc -o build/count-chars.o src/06-count-chars.s
 build/write-newline.o: src/06-write-newline.s
 	as --32 -I inc -o build/write-newline.o src/06-write-newline.s
-build/writerecs: src/06-writerecs.s
+build/writerecs: src/06-writerecs.s\
+		build/writerec.o
 	as --32 -I inc -o build/writerecs.o src/06-writerecs.s
 	ld -m elf_i386 -o build/writerecs\
 		build/writerec.o build/writerecs.o
-build/readrecs: src/06-readrecs.s
+build/readrecs: src/06-readrecs.s\
+		build/readrec.o build/count-chars.o build/write-newline.o
 	as --32 -I inc -o build/readrecs.o src/06-readrecs.s
 	ld -m elf_i386 -o build/readrecs\
 		build/readrec.o build/count-chars.o build/write-newline.o\
 		build/readrecs.o
-build/add-year: src/06-add-year.s
+build/add-year: src/06-add-year.s\
+		build/readrec.o build/writerec.o
 	as --32 -I inc -o build/add-year.o src/06-add-year.s
 	ld -m elf_i386 -o build/add-year\
 		build/readrec.o build/writerec.o build/add-year.o
@@ -69,7 +70,8 @@ build/readrec-64.o: src/06-readrec-64.s
 	as -I inc -o build/readrec-64.o src/06-readrec-64.s
 build/writerec-64.o: src/06-writerec-64.s
 	as -I inc -o build/writerec-64.o src/06-writerec-64.s
-build/writerecs-64: src/06-writerecs-64.s
+build/writerecs-64: src/06-writerecs-64.s\
+		build/writerec-64.o
 	as -I inc -o build/writerecs-64.o src/06-writerecs-64.s
 	ld -o build/writerecs-64\
 		build/writerecs-64.o build/writerec-64.o

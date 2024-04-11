@@ -15,7 +15,7 @@
 .global write_record
 .type write_record, @function
 write_record:
-        pushq %rsp
+        pushq %rbp
         movq %rsp, %rbp
 
         movq $SYS_WRITE, %rax
@@ -25,5 +25,6 @@ write_record:
         syscall
 
         movq %rbp, %rsp
+        popq %rbp
         ret
 

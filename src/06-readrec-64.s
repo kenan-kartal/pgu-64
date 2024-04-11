@@ -16,7 +16,7 @@
 .global read_record
 .type read_record, @function
 read_record:
-        pushq %rsp
+        pushq %rbp
         movq %rsp, %rbp
 
         movq $SYS_READ, %rax
@@ -26,5 +26,6 @@ read_record:
         syscall
 
         movq %rbp, %rsp
+        popq %rbp
         ret
 

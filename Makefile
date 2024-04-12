@@ -10,7 +10,7 @@ record: build\
 	build/writerecs build/readrecs build/add-year\
 	build/writerecs-64 build/readrecs-64 build/add-year-64
 robust-add-year: build build/robust-add-year build/robust-add-year-64
-helloworld-nolib: build build/helloworld-nolib
+helloworld-nolib: build build/helloworld-nolib build/helloworld-nolib-64
 helloworld-lib: build build/helloworld-lib
 
 build:
@@ -120,6 +120,9 @@ build/helloworld-lib: src/08-helloworld-lib.s
 	as --32 -I inc -o build/helloworld-lib.o src/08-helloworld-lib.s
 	ld -m elf_i386 -dynamic-linker /lib/ld-linux.so.2 -lc\
 		-o build/helloworld-lib build/helloworld-lib.o
+build/helloworld-nolib-64: src/08-helloworld-nolib-64.s
+	as -I inc -o build/helloworld-nolib-64.o src/08-helloworld-nolib-64.s
+	ld -o build/helloworld-nolib-64 build/helloworld-nolib-64.o
 
 test-exit:
 	build/exit; echo $$?
@@ -185,4 +188,6 @@ test-helloworld-nolib:
 	build/helloworld-nolib
 test-helloworld-lib:
 	build/helloworld-lib
+test-helloworld-nolib-64:
+	build/helloworld-nolib-64
 

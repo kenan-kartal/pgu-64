@@ -12,7 +12,7 @@ record: build\
 robust-add-year: build build/robust-add-year build/robust-add-year-64
 helloworld-nolib: build build/helloworld-nolib build/helloworld-nolib-64
 helloworld-lib: build build/helloworld-lib build/helloworld-lib-64
-printf-example: build build/printf-example
+printf-example: build build/printf-example build/printf-example-64
 
 build:
 	mkdir build
@@ -132,6 +132,10 @@ build/printf-example: src/08-printf-example.s
 	as --32 -I inc -o build/printf-example.o src/08-printf-example.s
 	ld -m elf_i386 -dynamic-linker /lib/ld-linux.so.2 -lc\
 		-o build/printf-example build/printf-example.o
+build/printf-example-64: src/08-printf-example-64.s
+	as -I inc -o build/printf-example-64.o src/08-printf-example-64.s
+	ld -dynamic-linker /lib64/ld-linux-x86-64.so.2 -lc\
+		-o build/printf-example-64 build/printf-example-64.o
 
 test-exit:
 	build/exit; echo $$?
@@ -203,4 +207,6 @@ test-helloworld-lib-64:
 	build/helloworld-lib-64
 test-printf-example:
 	build/printf-example
+test-printf-example-64:
+	build/printf-example-64
 

@@ -8,7 +8,7 @@ toupper: build build/toupper build/toupper-64
 record: build\
 	build/writerecs build/readrecs build/add-year\
 	build/writerecs-64 build/readrecs-64 build/add-year-64
-robust-add-year: build build/robust-add-year
+robust-add-year: build build/robust-add-year build/robust-add-year-64
 
 build:
 	mkdir build
@@ -102,6 +102,14 @@ build/robust-add-year: src/07-robust-add-year.s\
 		build/count-chars.o build/readrec.o build/writerec.o
 build/error-exit-64.o: src/07-error-exit-64.s
 	as -I inc -o build/error-exit-64.o src/07-error-exit-64.s
+build/robust-add-year-64: src/07-robust-add-year-64.s\
+		build/error-exit-64.o build/write-newline-64.o build/count-chars-64.o\
+		build/readrec-64.o build/writerec-64.o
+	as -I inc -o build/robust-add-year-64.o src/07-robust-add-year-64.s
+	ld -o build/robust-add-year-64\
+		build/robust-add-year-64.o build/error-exit-64.o\
+		build/write-newline-64.o build/count-chars-64.o\
+		build/readrec-64.o build/writerec-64.o
 
 test-exit:
 	build/exit; echo $$?
@@ -160,4 +168,7 @@ test-add-year-64:
 test-robust-add-year:
 	-rm build/recs.dat
 	build/robust-add-year; echo $$?
+test-robust-add-year-64:
+	-rm build/recs-64.dat
+	build/robust-add-year-64; echo $$?
 

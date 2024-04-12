@@ -1,4 +1,4 @@
-all: exit max power factorial toupper record
+all: exit max power factorial toupper record robust-add-year
 
 exit: build build/exit build/exit-64
 max: build build/max build/max-64
@@ -8,6 +8,7 @@ toupper: build build/toupper build/toupper-64
 record: build\
 	build/writerecs build/readrecs build/add-year\
 	build/writerecs-64 build/readrecs-64 build/add-year-64
+robust-add-year: build build/robust-add-year
 
 build:
 	mkdir build
@@ -92,6 +93,13 @@ build/add-year-64: src/06-add-year-64.s\
 		build/add-year-64.o build/readrec-64.o build/writerec-64.o
 build/error-exit.o: src/07-error-exit.s
 	as --32 -I inc -o build/error-exit.o src/07-error-exit.s
+build/robust-add-year: src/07-robust-add-year.s\
+		build/error-exit.o build/write-newline.o build/count-chars.o\
+		build/readrec.o build/writerec.o
+	as --32 -I inc -o build/robust-add-year.o src/07-robust-add-year.s
+	ld -m elf_i386 -o build/robust-add-year\
+		build/robust-add-year.o build/error-exit.o build/write-newline.o\
+		build/count-chars.o build/readrec.o build/writerec.o
 
 test-exit:
 	build/exit; echo $$?
@@ -147,4 +155,7 @@ test-add-year-64:
 	build/add-year-64
 	hexdump -e '"Name: " 2/40 "%s " "\n" "Address: " 1/240 "%s" "\n" "Age: " "%d\n"'\
 		build/recs2-64.dat
+test-robust-add-year:
+	-rm build/recs.dat
+	build/robust-add-year; echo $$?
 

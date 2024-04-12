@@ -1,4 +1,5 @@
-all: exit max power factorial toupper record robust-add-year
+all: exit max power factorial toupper record robust-add-year\
+	helloworld-nolib
 
 exit: build build/exit build/exit-64
 max: build build/max build/max-64
@@ -9,6 +10,7 @@ record: build\
 	build/writerecs build/readrecs build/add-year\
 	build/writerecs-64 build/readrecs-64 build/add-year-64
 robust-add-year: build build/robust-add-year build/robust-add-year-64
+helloworld-nolib: build build/helloworld-nolib
 
 build:
 	mkdir build
@@ -110,6 +112,9 @@ build/robust-add-year-64: src/07-robust-add-year-64.s\
 		build/robust-add-year-64.o build/error-exit-64.o\
 		build/write-newline-64.o build/count-chars-64.o\
 		build/readrec-64.o build/writerec-64.o
+build/helloworld-nolib: src/08-helloworld-nolib.s
+	as --32 -I inc -o build/helloworld-nolib.o src/08-helloworld-nolib.s
+	ld -m elf_i386 -o build/helloworld-nolib build/helloworld-nolib.o
 
 test-exit:
 	build/exit; echo $$?
@@ -171,4 +176,6 @@ test-robust-add-year:
 test-robust-add-year-64:
 	-rm build/recs-64.dat
 	build/robust-add-year-64; echo $$?
+test-helloworld-nolib:
+	build/helloworld-nolib
 

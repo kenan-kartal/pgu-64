@@ -100,6 +100,8 @@ build/robust-add-year: src/07-robust-add-year.s\
 	ld -m elf_i386 -o build/robust-add-year\
 		build/robust-add-year.o build/error-exit.o build/write-newline.o\
 		build/count-chars.o build/readrec.o build/writerec.o
+build/error-exit-64.o: src/07-error-exit-64.s
+	as -I inc -o build/error-exit-64.o src/07-error-exit-64.s
 
 test-exit:
 	build/exit; echo $$?

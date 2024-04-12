@@ -10,3 +10,30 @@ The lack of this suffix means the source is written for 32-bit mode.
 
 Make files for building and testing are included.
 
+== Build
+
+Build tools should support both 32-bit and 64-bit binaries.
+
+For Debian systems dependencies can be installed with the following command:
+
+[,console]
+----
+$ sudo apt install build-essential gcc-multilib
+----
+
+Then you can build the repository with:
+
+[,console]
+----
+$ make
+----
+
+== Test
+
+Programs may be tested with the following command:
+
+[,console]
+----
+$ make test-{name}[-64]
+----
+

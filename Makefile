@@ -1,5 +1,5 @@
 all: exit max power factorial toupper record robust-add-year\
-	helloworld-nolib helloworld-lib
+	helloworld-nolib helloworld-lib printf-example
 
 exit: build build/exit build/exit-64
 max: build build/max build/max-64
@@ -12,6 +12,7 @@ record: build\
 robust-add-year: build build/robust-add-year build/robust-add-year-64
 helloworld-nolib: build build/helloworld-nolib build/helloworld-nolib-64
 helloworld-lib: build build/helloworld-lib build/helloworld-lib-64
+printf-example: build build/printf-example
 
 build:
 	mkdir build
@@ -127,6 +128,10 @@ build/helloworld-lib-64: src/08-helloworld-lib-64.s
 	as -I inc -o build/helloworld-lib-64.o src/08-helloworld-lib-64.s
 	ld -dynamic-linker /lib64/ld-linux-x86-64.so.2 -lc\
 		-o build/helloworld-lib-64 build/helloworld-lib-64.o
+build/printf-example: src/08-printf-example.s
+	as --32 -I inc -o build/printf-example.o src/08-printf-example.s
+	ld -m elf_i386 -dynamic-linker /lib/ld-linux.so.2 -lc\
+		-o build/printf-example build/printf-example.o
 
 test-exit:
 	build/exit; echo $$?
@@ -196,4 +201,6 @@ test-helloworld-nolib-64:
 	build/helloworld-nolib-64
 test-helloworld-lib-64:
 	build/helloworld-lib-64
+test-printf-example:
+	build/printf-example
 

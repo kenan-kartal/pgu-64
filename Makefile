@@ -90,6 +90,8 @@ build/add-year-64: src/06-add-year-64.s\
 	as -I inc -o build/add-year-64.o src/06-add-year-64.s
 	ld -o build/add-year-64\
 		build/add-year-64.o build/readrec-64.o build/writerec-64.o
+build/error-exit.o: src/07-error-exit.s
+	as --32 -I inc -o build/error-exit.o src/07-error-exit.s
 
 test-exit:
 	build/exit; echo $$?

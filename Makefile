@@ -16,7 +16,7 @@ robust-add-year: build build/robust-add-year build/robust-add-year-64
 helloworld-nolib: build build/helloworld-nolib build/helloworld-nolib-64
 helloworld-lib: build build/helloworld-lib build/helloworld-lib-64
 printf-example: build build/printf-example build/printf-example-64
-shared-record: build build/writerecs-shared
+shared-record: build build/writerecs-shared build/writerecs-shared-64
 
 build:
 	mkdir build
@@ -148,6 +148,13 @@ build/writerecs-shared: src/06-writerecs.s build/librecord.so
 	ld -m elf_i386 -dynamic-linker /lib/ld-linux.so.2\
 		-L build -lrecord\
 		-o build/writerecs-shared build/writerecs-shared.o
+build/librecord-64.so: build/readrec-64.o build/writerec-64.o
+	ld -shared -o build/librecord-64.so\
+		build/readrec-64.o build/writerec-64.o
+build/writerecs-shared-64: src/06-writerecs-64.s build/librecord-64.so
+	as -I inc -o build/writerecs-shared-64.o src/06-writerecs-64.s
+	ld -dynamic-linker /lib64/ld-linux-x86-64.so.2 -L build -lrecord-64\
+		-o build/writerecs-shared-64 build/writerecs-shared-64.o
 
 test-exit:
 	build/exit; echo $$?
@@ -226,4 +233,9 @@ test-writerecs-shared:
 	build/writerecs-shared
 	hexdump -e '"Name: " 2/40 "%s " "\n" "Address: " 1/240 "%s" "\n" "Age: " "%d\n"'\
 		build/recs.dat
+test-writerecs-shared-64:
+	-rm build/recs-64.dat
+	build/writerecs-shared-64
+	hexdump -e '"Name: " 2/40 "%s " "\n" "Address: " 1/240 "%s" "\n" "Age: " "%d\n"'\
+		build/recs-64.dat
 

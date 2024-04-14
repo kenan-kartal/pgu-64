@@ -39,7 +39,7 @@ _start:
         # negative number represents.
         cmpl $0, %eax
         jge continue_processing         # NOTE: the instruction should not be jl
-                                        # Jumps if eax is less than 0
+                                        # Jumps if eax is not less than 0
 
 # Send the error
 .section .data

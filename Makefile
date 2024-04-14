@@ -155,6 +155,8 @@ build/writerecs-shared-64: src/06-writerecs-64.s build/librecord-64.so
 	as -I inc -o build/writerecs-shared-64.o src/06-writerecs-64.s
 	ld -dynamic-linker /lib64/ld-linux-x86-64.so.2 -L build -lrecord-64\
 		-o build/writerecs-shared-64 build/writerecs-shared-64.o
+build/alloc.o: src/09-alloc.s
+	as --32 -I inc -o build/alloc.o src/09-alloc.s
 
 test-exit:
 	build/exit; echo $$?

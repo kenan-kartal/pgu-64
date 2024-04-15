@@ -81,7 +81,7 @@ allocate:
 
 alloc_loop_begin:                       # iterate through each memory region
         cmpl %ebx, %eax                 # are we at break?
-        je move_break                   # is so, get new region
+        je move_break                   # if so, get new region
 
         movl HDR_SIZE_OFFSET(%eax), %edx                # grab size of region
         cmpl $UNAVAILABLE, HDR_AVAIL_OFFSET(%eax)       # is the region in use?

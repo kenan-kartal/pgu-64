@@ -2,7 +2,8 @@ LD_LIBRARY_PATH = ./build
 export LD_LIBRARY_PATH
 
 all: exit max power factorial toupper record robust-add-year\
-	helloworld-nolib helloworld-lib printf-example shared-record
+	helloworld-nolib helloworld-lib printf-example shared-record\
+	readrecs-alloc
 
 exit: build build/exit build/exit-64
 max: build build/max build/max-64
@@ -17,6 +18,7 @@ helloworld-nolib: build build/helloworld-nolib build/helloworld-nolib-64
 helloworld-lib: build build/helloworld-lib build/helloworld-lib-64
 printf-example: build build/printf-example build/printf-example-64
 shared-record: build build/writerecs-shared build/writerecs-shared-64
+readrecs-alloc: build build/readrecs-alloc
 
 build:
 	mkdir build
@@ -159,6 +161,13 @@ build/alloc.o: src/09-alloc.s
 	as --32 -I inc -o build/alloc.o src/09-alloc.s
 build/alloc-64.o: src/09-alloc-64.s
 	as -I inc -o build/alloc-64.o src/09-alloc-64.s
+build/readrecs-alloc: src/09-readrecs-alloc.s\
+		build/readrec.o build/count-chars.o build/write-newline.o\
+		build/alloc.o
+	as --32 -I inc -o build/readrecs-alloc.o src/09-readrecs-alloc.s
+	ld -m elf_i386 -o build/readrecs-alloc\
+		build/readrecs-alloc.o build/alloc.o\
+		build/readrec.o build/count-chars.o build/write-newline.o
 
 test-exit:
 	build/exit; echo $$?
@@ -242,4 +251,6 @@ test-writerecs-shared-64:
 	build/writerecs-shared-64
 	hexdump -e '"Name: " 2/40 "%s " "\n" "Address: " 1/240 "%s" "\n" "Age: " "%d\n"'\
 		build/recs-64.dat
+test-readrecs-alloc:
+	build/readrecs-alloc
 

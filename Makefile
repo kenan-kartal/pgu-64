@@ -18,7 +18,7 @@ helloworld-nolib: build build/helloworld-nolib build/helloworld-nolib-64
 helloworld-lib: build build/helloworld-lib build/helloworld-lib-64
 printf-example: build build/printf-example build/printf-example-64
 shared-record: build build/writerecs-shared build/writerecs-shared-64
-readrecs-alloc: build build/readrecs-alloc
+readrecs-alloc: build build/readrecs-alloc build/readrecs-alloc-64
 
 build:
 	mkdir build
@@ -168,6 +168,13 @@ build/readrecs-alloc: src/09-readrecs-alloc.s\
 	ld -m elf_i386 -o build/readrecs-alloc\
 		build/readrecs-alloc.o build/alloc.o\
 		build/readrec.o build/count-chars.o build/write-newline.o
+build/readrecs-alloc-64: src/09-readrecs-alloc-64.s\
+		build/readrec-64.o build/count-chars-64.o build/write-newline-64.o\
+		build/alloc-64.o
+	as -I inc -o build/readrecs-alloc-64.o src/09-readrecs-alloc-64.s
+	ld -o build/readrecs-alloc-64\
+		build/readrecs-alloc-64.o build/readrec-64.o build/count-chars-64.o\
+		build/write-newline-64.o build/alloc-64.o
 
 test-exit:
 	build/exit; echo $$?
@@ -253,4 +260,6 @@ test-writerecs-shared-64:
 		build/recs-64.dat
 test-readrecs-alloc:
 	build/readrecs-alloc
+test-readrecs-alloc-64:
+	build/readrecs-alloc-64
 

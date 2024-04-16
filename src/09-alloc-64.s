@@ -160,11 +160,9 @@ error:
 .global deallocate
 .type deallocate, @function
 deallocate:
-        .equ ST_MEMORY_SEG, 8
-
-        movq ST_MEMORY_SEG(%rsp), %rax  # Get the address
-        subq $HEADER_SIZE, %rax         # Mark it free
-        movq $AVAILABLE, HDR_AVAIL_OFFSET(%rax)
+        # Address is in %rdi
+        subq $HEADER_SIZE, %rdi         # Mark it free
+        movq $AVAILABLE, HDR_AVAIL_OFFSET(%rdi)
 
         ret
 ### end of function ###

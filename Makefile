@@ -290,4 +290,6 @@ test-hello-world-c:
 	build/hello-world-c
 test-hello-world-pl:
 	perl src/11-hello-world.pl
+test-hello-world-py:
+	python3 src/11-hello-world.py
 

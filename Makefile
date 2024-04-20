@@ -183,6 +183,8 @@ build/conversion-program: src/10-conversion-program.s\
 	as --32 -I inc -o build/conversion-program.o src/10-conversion-program.s
 	ld -m elf_i386 -o build/conversion-program build/conversion-program.o\
 		build/integer-to-string.o build/count-chars.o build/write-newline.o
+build/integer-to-string-64.o: src/10-integer-to-string-64.s
+	as -o build/integer-to-string-64.o src/10-integer-to-string-64.s
 
 test-exit:
 	build/exit; echo $$?

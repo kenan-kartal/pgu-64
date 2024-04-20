@@ -3,7 +3,7 @@ export LD_LIBRARY_PATH
 
 all: exit max power factorial toupper record robust-add-year\
 	helloworld-nolib helloworld-lib printf-example shared-record\
-	readrecs-alloc
+	readrecs-alloc conversion-program
 
 exit: build build/exit build/exit-64
 max: build build/max build/max-64
@@ -19,6 +19,7 @@ helloworld-lib: build build/helloworld-lib build/helloworld-lib-64
 printf-example: build build/printf-example build/printf-example-64
 shared-record: build build/writerecs-shared build/writerecs-shared-64
 readrecs-alloc: build build/readrecs-alloc build/readrecs-alloc-64
+conversion-program: build build/conversion-program
 
 build:
 	mkdir build
@@ -177,6 +178,11 @@ build/readrecs-alloc-64: src/09-readrecs-alloc-64.s\
 		build/write-newline-64.o build/alloc-64.o
 build/integer-to-string.o: src/10-integer-to-string.s
 	as --32 -o build/integer-to-string.o src/10-integer-to-string.s
+build/conversion-program: src/10-conversion-program.s\
+		build/integer-to-string.o build/count-chars.o build/write-newline.o
+	as --32 -I inc -o build/conversion-program.o src/10-conversion-program.s
+	ld -m elf_i386 -o build/conversion-program build/conversion-program.o\
+		build/integer-to-string.o build/count-chars.o build/write-newline.o
 
 test-exit:
 	build/exit; echo $$?
@@ -264,4 +270,6 @@ test-readrecs-alloc:
 	build/readrecs-alloc
 test-readrecs-alloc-64:
 	build/readrecs-alloc-64
+test-conversion-program:
+	build/conversion-program
 

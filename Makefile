@@ -3,7 +3,7 @@ export LD_LIBRARY_PATH
 
 all: exit max power factorial toupper record robust-add-year\
 	helloworld-nolib helloworld-lib printf-example shared-record\
-	readrecs-alloc conversion-program
+	readrecs-alloc conversion-program hello-world
 
 exit: build build/exit build/exit-64
 max: build build/max build/max-64
@@ -20,6 +20,7 @@ printf-example: build build/printf-example build/printf-example-64
 shared-record: build build/writerecs-shared build/writerecs-shared-64
 readrecs-alloc: build build/readrecs-alloc build/readrecs-alloc-64
 conversion-program: build build/conversion-program build/conversion-program-64
+hello-world: build build/hello-world-c
 
 build:
 	mkdir build
@@ -192,6 +193,8 @@ build/conversion-program-64: src/10-conversion-program-64.s\
 	ld -o build/conversion-program-64 build/conversion-program-64.o\
 		build/integer-to-string-64.o build/count-chars-64.o\
 		build/write-newline-64.o
+build/hello-world-c: src/11-hello-world.c
+	gcc -o build/hello-world-c src/11-hello-world.c
 
 test-exit:
 	build/exit; echo $$?
@@ -283,4 +286,6 @@ test-conversion-program:
 	build/conversion-program
 test-conversion-program-64:
 	build/conversion-program-64
+test-hello-world-c:
+	build/hello-world-c
 

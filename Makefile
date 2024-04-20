@@ -19,7 +19,7 @@ helloworld-lib: build build/helloworld-lib build/helloworld-lib-64
 printf-example: build build/printf-example build/printf-example-64
 shared-record: build build/writerecs-shared build/writerecs-shared-64
 readrecs-alloc: build build/readrecs-alloc build/readrecs-alloc-64
-conversion-program: build build/conversion-program
+conversion-program: build build/conversion-program build/conversion-program-64
 
 build:
 	mkdir build
@@ -185,6 +185,13 @@ build/conversion-program: src/10-conversion-program.s\
 		build/integer-to-string.o build/count-chars.o build/write-newline.o
 build/integer-to-string-64.o: src/10-integer-to-string-64.s
 	as -o build/integer-to-string-64.o src/10-integer-to-string-64.s
+build/conversion-program-64: src/10-conversion-program-64.s\
+		build/integer-to-string-64.o build/count-chars-64.o\
+		build/write-newline-64.o
+	as -I inc -o build/conversion-program-64.o src/10-conversion-program-64.s
+	ld -o build/conversion-program-64 build/conversion-program-64.o\
+		build/integer-to-string-64.o build/count-chars-64.o\
+		build/write-newline-64.o
 
 test-exit:
 	build/exit; echo $$?
@@ -274,4 +281,6 @@ test-readrecs-alloc-64:
 	build/readrecs-alloc-64
 test-conversion-program:
 	build/conversion-program
+test-conversion-program-64:
+	build/conversion-program-64
 

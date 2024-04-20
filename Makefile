@@ -288,4 +288,6 @@ test-conversion-program-64:
 	build/conversion-program-64
 test-hello-world-c:
 	build/hello-world-c
+test-hello-world-pl:
+	perl src/11-hello-world.pl
 

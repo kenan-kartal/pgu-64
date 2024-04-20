@@ -175,6 +175,8 @@ build/readrecs-alloc-64: src/09-readrecs-alloc-64.s\
 	ld -o build/readrecs-alloc-64\
 		build/readrecs-alloc-64.o build/readrec-64.o build/count-chars-64.o\
 		build/write-newline-64.o build/alloc-64.o
+build/integer-to-string.o: src/10-integer-to-string.s
+	as --32 -o build/integer-to-string.o src/10-integer-to-string.s
 
 test-exit:
 	build/exit; echo $$?

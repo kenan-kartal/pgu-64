@@ -1,4 +1,4 @@
-LD_LIBRARY_PATH = ./build
+LD_LIBRARY_PATH := ./build
 export LD_LIBRARY_PATH
 
 all: exit max power factorial toupper record robust-add-year\

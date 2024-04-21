@@ -5,6 +5,10 @@ all: exit max power factorial toupper record robust-add-year\
 	helloworld-nolib helloworld-lib printf-example shared-record\
 	readrecs-alloc conversion-program hello-world
 
+.PHONY: clean
+clean:
+	rm -rf build
+
 exit: build build/exit build/exit-64
 max: build build/max build/max-64
 power: build build/power build/power-64

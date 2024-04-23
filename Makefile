@@ -1,13 +1,17 @@
+# Dynamic linking path
 LD_LIBRARY_PATH := ./build
 export LD_LIBRARY_PATH
 
+# Common arguments
 AS_ARGS_32 := --32
 LD_ARGS_32 := -m elf_i386
 INC_ARGS := -I inc
 
+# Common test commands or arguments
 PRINT_RECS := hexdump -e '"Name: " 2/40 "%s " "\n" "Address: " 1/240 "%s" "\n" "Age: " "%d\n"'
 LOWERCASE_TEST_STRING := "iT's aLl uppErCaSE!\n"
 
+# Default target
 all: exit max power factorial toupper record robust-add-year\
 	helloworld-nolib helloworld-lib printf-example shared-record\
 	readrecs-alloc conversion-program hello-world

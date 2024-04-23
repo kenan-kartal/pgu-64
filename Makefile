@@ -20,116 +20,115 @@ all: exit max power factorial toupper record robust-add-year\
 clean:
 	rm -rf build
 
-exit: build build/exit build/exit-64
-max: build build/max build/max-64
-power: build build/power build/power-64
-factorial: build build/factorial build/factorial-64
-toupper: build build/toupper build/toupper-64
-record: build\
-	build/writerecs build/readrecs build/add-year\
+exit: build/exit build/exit-64
+max: build/max build/max-64
+power: build/power build/power-64
+factorial: build/factorial build/factorial-64
+toupper: build/toupper build/toupper-64
+record: build/writerecs build/readrecs build/add-year\
 	build/writerecs-64 build/readrecs-64 build/add-year-64
-robust-add-year: build build/robust-add-year build/robust-add-year-64
-helloworld-nolib: build build/helloworld-nolib build/helloworld-nolib-64
-helloworld-lib: build build/helloworld-lib build/helloworld-lib-64
-printf-example: build build/printf-example build/printf-example-64
-shared-record: build build/writerecs-shared build/writerecs-shared-64
-readrecs-alloc: build build/readrecs-alloc build/readrecs-alloc-64
-conversion-program: build build/conversion-program build/conversion-program-64
-hello-world: build build/hello-world-c
+robust-add-year: build/robust-add-year build/robust-add-year-64
+helloworld-nolib: build/helloworld-nolib build/helloworld-nolib-64
+helloworld-lib: build/helloworld-lib build/helloworld-lib-64
+printf-example: build/printf-example build/printf-example-64
+shared-record: build/writerecs-shared build/writerecs-shared-64
+readrecs-alloc: build/readrecs-alloc build/readrecs-alloc-64
+conversion-program: build/conversion-program build/conversion-program-64
+hello-world: build/hello-world-c
 
 build:
 	mkdir build
 
-build/exit: src/03-exit.s
+build/exit: src/03-exit.s | build
 	as $(AS_ARGS_32) -o build/exit.o src/03-exit.s
 	ld $(LD_ARGS_32) -o build/exit build/exit.o
-build/exit-64: src/03-exit-64.s
+build/exit-64: src/03-exit-64.s | build
 	as -o build/exit-64.o src/03-exit-64.s
 	ld -o build/exit-64 build/exit-64.o
-build/max: src/03-max.s
+build/max: src/03-max.s | build
 	as $(AS_ARGS_32) -o build/max.o src/03-max.s
 	ld $(LD_ARGS_32) -o build/max build/max.o
-build/max-64: src/03-max-64.s
+build/max-64: src/03-max-64.s | build
 	as -o build/max-64.o src/03-max-64.s
 	ld -o build/max-64 build/max-64.o
-build/power: src/04-power.s
+build/power: src/04-power.s | build
 	as $(AS_ARGS_32) -o build/power.o src/04-power.s
 	ld $(LD_ARGS_32) -o build/power build/power.o
-build/power-64: src/04-power-64.s
+build/power-64: src/04-power-64.s | build
 	as -o build/power-64.o src/04-power-64.s
 	ld -o build/power-64 build/power-64.o
-build/factorial: src/04-factorial.s
+build/factorial: src/04-factorial.s | build
 	as $(AS_ARGS_32) -o build/factorial.o src/04-factorial.s
 	ld $(LD_ARGS_32) -o build/factorial build/factorial.o
-build/factorial-64: src/04-factorial-64.s
+build/factorial-64: src/04-factorial-64.s | build
 	as -o build/factorial-64.o src/04-factorial-64.s
 	ld -o build/factorial-64 build/factorial-64.o
-build/toupper: src/05-toupper.s
+build/toupper: src/05-toupper.s | build
 	as $(AS_ARGS_32) -o build/toupper.o src/05-toupper.s
 	ld $(LD_ARGS_32) -o build/toupper build/toupper.o
-build/toupper-64: src/05-toupper-64.s
+build/toupper-64: src/05-toupper-64.s | build
 	as -o build/toupper-64.o src/05-toupper-64.s
 	ld -o build/toupper-64 build/toupper-64.o
-build/readrec.o: src/06-readrec.s
+build/readrec.o: src/06-readrec.s | build
 	as $(AS_ARGS_32) $(INC_ARGS) -o build/readrec.o src/06-readrec.s
-build/writerec.o: src/06-writerec.s
+build/writerec.o: src/06-writerec.s | build
 	as $(AS_ARGS_32) $(INC_ARGS) -o build/writerec.o src/06-writerec.s
-build/count-chars.o: src/06-count-chars.s
+build/count-chars.o: src/06-count-chars.s | build
 	as $(AS_ARGS_32) $(INC_ARGS) -o build/count-chars.o src/06-count-chars.s
-build/write-newline.o: src/06-write-newline.s
+build/write-newline.o: src/06-write-newline.s | build
 	as $(AS_ARGS_32) $(INC_ARGS) -o build/write-newline.o src/06-write-newline.s
-build/writerecs: src/06-writerecs.s\
+build/writerecs: src/06-writerecs.s | build\
 		build/writerec.o
 	as $(AS_ARGS_32) $(INC_ARGS) -o build/writerecs.o src/06-writerecs.s
 	ld $(LD_ARGS_32) -o build/writerecs\
 		build/writerec.o build/writerecs.o
-build/readrecs: src/06-readrecs.s\
+build/readrecs: src/06-readrecs.s | build\
 		build/readrec.o build/count-chars.o build/write-newline.o
 	as $(AS_ARGS_32) $(INC_ARGS) -o build/readrecs.o src/06-readrecs.s
 	ld $(LD_ARGS_32) -o build/readrecs\
 		build/readrec.o build/count-chars.o build/write-newline.o\
 		build/readrecs.o
-build/add-year: src/06-add-year.s\
+build/add-year: src/06-add-year.s | build\
 		build/readrec.o build/writerec.o
 	as $(AS_ARGS_32) $(INC_ARGS) -o build/add-year.o src/06-add-year.s
 	ld $(LD_ARGS_32) -o build/add-year\
 		build/readrec.o build/writerec.o build/add-year.o
-build/readrec-64.o: src/06-readrec-64.s
+build/readrec-64.o: src/06-readrec-64.s | build
 	as $(INC_ARGS) -o build/readrec-64.o src/06-readrec-64.s
-build/writerec-64.o: src/06-writerec-64.s
+build/writerec-64.o: src/06-writerec-64.s | build
 	as $(INC_ARGS) -o build/writerec-64.o src/06-writerec-64.s
-build/count-chars-64.o: src/06-count-chars-64.s
+build/count-chars-64.o: src/06-count-chars-64.s | build
 	as $(INC_ARGS) -o build/count-chars-64.o src/06-count-chars-64.s
-build/write-newline-64.o: src/06-write-newline-64.s
+build/write-newline-64.o: src/06-write-newline-64.s | build
 	as $(INC_ARGS) -o build/write-newline-64.o src/06-write-newline-64.s
-build/writerecs-64: src/06-writerecs-64.s\
+build/writerecs-64: src/06-writerecs-64.s | build\
 		build/writerec-64.o
 	as $(INC_ARGS) -o build/writerecs-64.o src/06-writerecs-64.s
 	ld -o build/writerecs-64\
 		build/writerecs-64.o build/writerec-64.o
-build/readrecs-64: src/06-readrecs-64.s\
+build/readrecs-64: src/06-readrecs-64.s | build\
 		build/readrec-64.o build/count-chars-64.o build/write-newline-64.o
 	as $(INC_ARGS) -o build/readrecs-64.o src/06-readrecs-64.s
 	ld -o build/readrecs-64\
 		build/readrecs-64.o build/readrec-64.o build/count-chars-64.o\
 		build/write-newline-64.o
-build/add-year-64: src/06-add-year-64.s\
+build/add-year-64: src/06-add-year-64.s | build\
 		build/readrec-64.o build/writerec-64.o
 	as $(INC_ARGS) -o build/add-year-64.o src/06-add-year-64.s
 	ld -o build/add-year-64\
 		build/add-year-64.o build/readrec-64.o build/writerec-64.o
-build/error-exit.o: src/07-error-exit.s
+build/error-exit.o: src/07-error-exit.s | build
 	as $(AS_ARGS_32) $(INC_ARGS) -o build/error-exit.o src/07-error-exit.s
-build/robust-add-year: src/07-robust-add-year.s\
+build/robust-add-year: src/07-robust-add-year.s | build\
 		build/error-exit.o build/write-newline.o build/count-chars.o\
 		build/readrec.o build/writerec.o
 	as $(AS_ARGS_32) $(INC_ARGS) -o build/robust-add-year.o src/07-robust-add-year.s
 	ld $(LD_ARGS_32) -o build/robust-add-year\
 		build/robust-add-year.o build/error-exit.o build/write-newline.o\
 		build/count-chars.o build/readrec.o build/writerec.o
-build/error-exit-64.o: src/07-error-exit-64.s
+build/error-exit-64.o: src/07-error-exit-64.s | build
 	as $(INC_ARGS) -o build/error-exit-64.o src/07-error-exit-64.s
-build/robust-add-year-64: src/07-robust-add-year-64.s\
+build/robust-add-year-64: src/07-robust-add-year-64.s | build\
 		build/error-exit-64.o build/write-newline-64.o build/count-chars-64.o\
 		build/readrec-64.o build/writerec-64.o
 	as $(INC_ARGS) -o build/robust-add-year-64.o src/07-robust-add-year-64.s
@@ -137,78 +136,78 @@ build/robust-add-year-64: src/07-robust-add-year-64.s\
 		build/robust-add-year-64.o build/error-exit-64.o\
 		build/write-newline-64.o build/count-chars-64.o\
 		build/readrec-64.o build/writerec-64.o
-build/helloworld-nolib: src/08-helloworld-nolib.s
+build/helloworld-nolib: src/08-helloworld-nolib.s | build
 	as $(AS_ARGS_32) $(INC_ARGS) -o build/helloworld-nolib.o src/08-helloworld-nolib.s
 	ld $(LD_ARGS_32) -o build/helloworld-nolib build/helloworld-nolib.o
-build/helloworld-lib: src/08-helloworld-lib.s
+build/helloworld-lib: src/08-helloworld-lib.s | build
 	as $(AS_ARGS_32) $(INC_ARGS) -o build/helloworld-lib.o src/08-helloworld-lib.s
 	ld $(LD_ARGS_32) -dynamic-linker /lib/ld-linux.so.2 -lc\
 		-o build/helloworld-lib build/helloworld-lib.o
-build/helloworld-nolib-64: src/08-helloworld-nolib-64.s
+build/helloworld-nolib-64: src/08-helloworld-nolib-64.s | build
 	as $(INC_ARGS) -o build/helloworld-nolib-64.o src/08-helloworld-nolib-64.s
 	ld -o build/helloworld-nolib-64 build/helloworld-nolib-64.o
-build/helloworld-lib-64: src/08-helloworld-lib-64.s
+build/helloworld-lib-64: src/08-helloworld-lib-64.s | build
 	as $(INC_ARGS) -o build/helloworld-lib-64.o src/08-helloworld-lib-64.s
 	ld -dynamic-linker /lib64/ld-linux-x86-64.so.2 -lc\
 		-o build/helloworld-lib-64 build/helloworld-lib-64.o
-build/printf-example: src/08-printf-example.s
+build/printf-example: src/08-printf-example.s | build
 	as $(AS_ARGS_32) $(INC_ARGS) -o build/printf-example.o src/08-printf-example.s
 	ld $(LD_ARGS_32) -dynamic-linker /lib/ld-linux.so.2 -lc\
 		-o build/printf-example build/printf-example.o
-build/printf-example-64: src/08-printf-example-64.s
+build/printf-example-64: src/08-printf-example-64.s | build
 	as $(INC_ARGS) -o build/printf-example-64.o src/08-printf-example-64.s
 	ld -dynamic-linker /lib64/ld-linux-x86-64.so.2 -lc\
 		-o build/printf-example-64 build/printf-example-64.o
-build/librecord.so: build/readrec.o build/writerec.o
+build/librecord.so: build/readrec.o build/writerec.o | build
 	ld $(LD_ARGS_32) -shared -o build/librecord.so\
 		build/readrec.o build/writerec.o
-build/writerecs-shared: src/06-writerecs.s build/librecord.so
+build/writerecs-shared: src/06-writerecs.s build/librecord.so | build
 	as $(AS_ARGS_32) $(INC_ARGS) -o build/writerecs-shared.o src/06-writerecs.s
 	ld $(LD_ARGS_32) -dynamic-linker /lib/ld-linux.so.2\
 		-L build -lrecord\
 		-o build/writerecs-shared build/writerecs-shared.o
-build/librecord-64.so: build/readrec-64.o build/writerec-64.o
+build/librecord-64.so: build/readrec-64.o build/writerec-64.o | build
 	ld -shared -o build/librecord-64.so\
 		build/readrec-64.o build/writerec-64.o
-build/writerecs-shared-64: src/06-writerecs-64.s build/librecord-64.so
+build/writerecs-shared-64: src/06-writerecs-64.s build/librecord-64.so | build
 	as $(INC_ARGS) -o build/writerecs-shared-64.o src/06-writerecs-64.s
 	ld -dynamic-linker /lib64/ld-linux-x86-64.so.2 -L build -lrecord-64\
 		-o build/writerecs-shared-64 build/writerecs-shared-64.o
-build/alloc.o: src/09-alloc.s
+build/alloc.o: src/09-alloc.s | build
 	as $(AS_ARGS_32) $(INC_ARGS) -o build/alloc.o src/09-alloc.s
-build/alloc-64.o: src/09-alloc-64.s
+build/alloc-64.o: src/09-alloc-64.s | build
 	as $(INC_ARGS) -o build/alloc-64.o src/09-alloc-64.s
-build/readrecs-alloc: src/09-readrecs-alloc.s\
+build/readrecs-alloc: src/09-readrecs-alloc.s | build\
 		build/readrec.o build/count-chars.o build/write-newline.o\
 		build/alloc.o
 	as $(AS_ARGS_32) $(INC_ARGS) -o build/readrecs-alloc.o src/09-readrecs-alloc.s
 	ld $(LD_ARGS_32) -o build/readrecs-alloc\
 		build/readrecs-alloc.o build/alloc.o\
 		build/readrec.o build/count-chars.o build/write-newline.o
-build/readrecs-alloc-64: src/09-readrecs-alloc-64.s\
+build/readrecs-alloc-64: src/09-readrecs-alloc-64.s | build\
 		build/readrec-64.o build/count-chars-64.o build/write-newline-64.o\
 		build/alloc-64.o
 	as $(INC_ARGS) -o build/readrecs-alloc-64.o src/09-readrecs-alloc-64.s
 	ld -o build/readrecs-alloc-64\
 		build/readrecs-alloc-64.o build/readrec-64.o build/count-chars-64.o\
 		build/write-newline-64.o build/alloc-64.o
-build/integer-to-string.o: src/10-integer-to-string.s
+build/integer-to-string.o: src/10-integer-to-string.s | build
 	as $(AS_ARGS_32) -o build/integer-to-string.o src/10-integer-to-string.s
-build/conversion-program: src/10-conversion-program.s\
+build/conversion-program: src/10-conversion-program.s | build\
 		build/integer-to-string.o build/count-chars.o build/write-newline.o
 	as $(AS_ARGS_32) $(INC_ARGS) -o build/conversion-program.o src/10-conversion-program.s
 	ld $(LD_ARGS_32) -o build/conversion-program build/conversion-program.o\
 		build/integer-to-string.o build/count-chars.o build/write-newline.o
-build/integer-to-string-64.o: src/10-integer-to-string-64.s
+build/integer-to-string-64.o: src/10-integer-to-string-64.s | build
 	as -o build/integer-to-string-64.o src/10-integer-to-string-64.s
-build/conversion-program-64: src/10-conversion-program-64.s\
+build/conversion-program-64: src/10-conversion-program-64.s | build\
 		build/integer-to-string-64.o build/count-chars-64.o\
 		build/write-newline-64.o
 	as $(INC_ARGS) -o build/conversion-program-64.o src/10-conversion-program-64.s
 	ld -o build/conversion-program-64 build/conversion-program-64.o\
 		build/integer-to-string-64.o build/count-chars-64.o\
 		build/write-newline-64.o
-build/hello-world-c: src/11-hello-world.c
+build/hello-world-c: src/11-hello-world.c | build
 	gcc -o build/hello-world-c src/11-hello-world.c
 
 test-exit:

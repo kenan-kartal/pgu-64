@@ -16,6 +16,7 @@ all: exit max power factorial toupper record robust-add-year\
 	helloworld-nolib helloworld-lib printf-example shared-record\
 	readrecs-alloc conversion-program hello-world
 
+# Clean up build artefacts
 .PHONY: clean
 clean:
 	rm -rf build
@@ -36,6 +37,7 @@ readrecs-alloc: build/readrecs-alloc build/readrecs-alloc-64
 conversion-program: build/conversion-program build/conversion-program-64
 hello-world: build/hello-world-c
 
+# Build artefacts
 build:
 	mkdir build
 
@@ -210,6 +212,7 @@ build/conversion-program-64: src/10-conversion-program-64.s | build\
 build/hello-world-c: src/11-hello-world.c | build
 	gcc -o build/hello-world-c src/11-hello-world.c
 
+# Tests
 test-exit:
 	build/exit; echo $$?
 test-exit-64:

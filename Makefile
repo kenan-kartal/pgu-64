@@ -11,10 +11,13 @@ INC_ARGS := -I inc
 PRINT_RECS := hexdump -e '"Name: " 2/40 "%s " "\n" "Address: " 1/240 "%s" "\n" "Age: " "%d\n"'
 LOWERCASE_TEST_STRING := "iT's aLl uppErCaSE!\n"
 
+# Programs
+PROGRAMS := exit max power factorial toupper writerecs readrecs add-year\
+	       robust-add-year helloworld-nolib helloworld-lib printf-example\
+	       shared-record readrecs-alloc conversion-program hello-world
+
 # Default target
-all: exit max power factorial toupper record robust-add-year\
-	helloworld-nolib helloworld-lib printf-example shared-record\
-	readrecs-alloc conversion-program hello-world
+all: $(PROGRAMS)
 
 # Clean up build artefacts
 .PHONY: clean

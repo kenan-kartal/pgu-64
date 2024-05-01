@@ -19,7 +19,7 @@ vpath % build
 # Programs
 PROGRAMS_32 := exit max power factorial toupper writerecs readrecs add-year\
 	       robust-add-year helloworld-nolib helloworld-lib printf-example\
-	       shared-record readrecs-alloc conversion-program
+	       writerecs-shared readrecs-alloc conversion-program
 PROGRAMS_64 := $(patsubst %,%-64,$(PROGRAMS_32))
 OTHER_PROGRAMS := hello-world-c
 
@@ -153,18 +153,22 @@ printf-example-64: 08-printf-example-64.s
 	as $(INC_ARGS) -o build/printf-example-64.o $<
 	ld -dynamic-linker /lib64/ld-linux-x86-64.so.2 -lc\
 		-o build/printf-example-64 build/printf-example-64.o
-librecord.so: build/readrec.o build/writerec.o
+librecord.so: readrec.o\
+		writerec.o
 	ld $(LD_ARGS_32) -shared -o build/librecord.so\
 		build/readrec.o build/writerec.o
-writerecs-shared: 06-writerecs.s build/librecord.so
+writerecs-shared: 06-writerecs.s\
+		librecord.so
 	as $(AS_ARGS_32) $(INC_ARGS) -o build/writerecs-shared.o $<
 	ld $(LD_ARGS_32) -dynamic-linker /lib/ld-linux.so.2\
 		-L build -lrecord\
 		-o build/writerecs-shared build/writerecs-shared.o
-librecord-64.so: build/readrec-64.o build/writerec-64.o
+librecord-64.so: readrec-64.o\
+		writerec-64.o
 	ld -shared -o build/librecord-64.so\
 		build/readrec-64.o build/writerec-64.o
-writerecs-shared-64: 06-writerecs-64.s build/librecord-64.so
+writerecs-shared-64: 06-writerecs-64.s\
+		librecord-64.so
 	as $(INC_ARGS) -o build/writerecs-shared-64.o $<
 	ld -dynamic-linker /lib64/ld-linux-x86-64.so.2 -L build -lrecord-64\
 		-o build/writerecs-shared-64 build/writerecs-shared-64.o

@@ -155,8 +155,7 @@ printf-example-64: 08-printf-example-64.s
 	as $(DEBUG_ARGS) $(INC_ARGS) -o build/printf-example-64.o $<
 	ld $(DEBUG_ARGS) -dynamic-linker /lib64/ld-linux-x86-64.so.2 -lc\
 		-o build/printf-example-64 build/printf-example-64.o
-librecord.so: readrec.o\
-		writerec.o
+librecord.so: readrec.o writerec.o
 	ld $(DEBUG_ARGS) $(LD_ARGS_32) -shared -o build/librecord.so\
 		build/readrec.o build/writerec.o
 writerecs-shared: 06-writerecs.s\
@@ -165,8 +164,7 @@ writerecs-shared: 06-writerecs.s\
 	ld $(DEBUG_ARGS) $(LD_ARGS_32) -dynamic-linker /lib/ld-linux.so.2\
 		-L build -lrecord\
 		-o build/writerecs-shared build/writerecs-shared.o
-librecord-64.so: readrec-64.o\
-		writerec-64.o
+librecord-64.so: readrec-64.o writerec-64.o
 	ld $(DEBUG_ARGS) -shared -o build/librecord-64.so\
 		build/readrec-64.o build/writerec-64.o
 writerecs-shared-64: 06-writerecs-64.s\

@@ -22,8 +22,8 @@ vpath % build
 
 # Programs
 PROGRAMS_32 := exit max power factorial toupper writerecs readrecs add-year\
-	       robust-add-year helloworld-nolib helloworld-lib printf-example\
-	       writerecs-shared readrecs-alloc conversion-program
+		robust-add-year helloworld-nolib helloworld-lib printf-example\
+		writerecs-shared readrecs-alloc conversion-program
 PROGRAMS_64 := $(patsubst %,%-64,$(PROGRAMS_32))
 C_PROGRAMS := hello-world-c
 

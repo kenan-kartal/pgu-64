@@ -222,7 +222,7 @@ build/conversion-program-64: conversion-program-64.o\
 		integer-to-string-64.o count-chars-64.o write-newline-64.o
 	ld $(LD_ARGS_64) -o $@ $^
 
-# Build C Programs
+# Build C programs
 hello-world-c: 11-hello-world.c
 	gcc $(C_ARGS) -o build/$@ $<
 

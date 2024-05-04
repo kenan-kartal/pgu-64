@@ -226,33 +226,20 @@ build/conversion-program-64: conversion-program-64.o\
 hello-world-c: 11-hello-world.c
 	gcc $(C_ARGS) -o build/$@ $<
 
-# Tests
+# Tests 32-bit
 test-exit:
 	build/exit; echo $$?
-test-exit-64:
-	build/exit-64; echo $$?
 test-max:
 	build/max; echo $$?
-test-max-64:
-	build/max-64; echo $$?
 test-power:
 	build/power; echo $$?
-test-power-64:
-	build/power-64; echo $$?
 test-factorial:
 	build/factorial; echo $$?
-test-factorial-64:
-	build/factorial-64; echo $$?
 test-toupper:
 	-rm build/toupper_out
 	echo $(LOWERCASE_TEST_STRING) > build/toupper_in
 	build/toupper build/toupper_in build/toupper_out
 	cat build/toupper_out
-test-toupper-64:
-	-rm build/toupper-64_out
-	echo $(LOWERCASE_TEST_STRING) > build/toupper-64_in
-	build/toupper-64 build/toupper-64_in build/toupper-64_out
-	cat build/toupper-64_out
 test-writerecs:
 	-rm build/recs.dat
 	build/writerecs
@@ -264,6 +251,38 @@ test-add-year:
 	$(PRINT_RECS) build/recs.dat
 	build/add-year
 	$(PRINT_RECS) build/recs2.dat
+test-robust-add-year:
+	-rm build/recs.dat
+	build/robust-add-year; echo $$?
+test-helloworld-nolib:
+	build/helloworld-nolib
+test-helloworld-lib:
+	build/helloworld-lib
+test-printf-example:
+	build/printf-example
+test-writerecs-shared:
+	-rm build/recs.dat
+	build/writerecs-shared
+	$(PRINT_RECS) build/recs.dat
+test-readrecs-alloc:
+	build/readrecs-alloc
+test-conversion-program:
+	build/conversion-program
+
+# Tests 64-bit
+test-exit-64:
+	build/exit-64; echo $$?
+test-max-64:
+	build/max-64; echo $$?
+test-power-64:
+	build/power-64; echo $$?
+test-factorial-64:
+	build/factorial-64; echo $$?
+test-toupper-64:
+	-rm build/toupper-64_out
+	echo $(LOWERCASE_TEST_STRING) > build/toupper-64_in
+	build/toupper-64 build/toupper-64_in build/toupper-64_out
+	cat build/toupper-64_out
 test-writerecs-64:
 	-rm build/recs-64.dat
 	build/writerecs-64
@@ -275,40 +294,25 @@ test-add-year-64:
 	$(PRINT_RECS) build/recs-64.dat
 	build/add-year-64
 	$(PRINT_RECS) build/recs2-64.dat
-test-robust-add-year:
-	-rm build/recs.dat
-	build/robust-add-year; echo $$?
 test-robust-add-year-64:
 	-rm build/recs-64.dat
 	build/robust-add-year-64; echo $$?
-test-helloworld-nolib:
-	build/helloworld-nolib
-test-helloworld-lib:
-	build/helloworld-lib
 test-helloworld-nolib-64:
 	build/helloworld-nolib-64
 test-helloworld-lib-64:
 	build/helloworld-lib-64
-test-printf-example:
-	build/printf-example
 test-printf-example-64:
 	build/printf-example-64
-test-writerecs-shared:
-	-rm build/recs.dat
-	build/writerecs-shared
-	$(PRINT_RECS) build/recs.dat
 test-writerecs-shared-64:
 	-rm build/recs-64.dat
 	build/writerecs-shared-64
 	$(PRINT_RECS) build/recs-64.dat
-test-readrecs-alloc:
-	build/readrecs-alloc
 test-readrecs-alloc-64:
 	build/readrecs-alloc-64
-test-conversion-program:
-	build/conversion-program
 test-conversion-program-64:
 	build/conversion-program-64
+
+# Tests other programs
 test-hello-world-c:
 	build/hello-world-c
 test-hello-world-pl:

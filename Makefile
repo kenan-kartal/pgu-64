@@ -23,10 +23,10 @@ PROGRAMS_32 := exit max power factorial toupper writerecs readrecs add-year\
 	       robust-add-year helloworld-nolib helloworld-lib printf-example\
 	       writerecs-shared readrecs-alloc conversion-program
 PROGRAMS_64 := $(patsubst %,%-64,$(PROGRAMS_32))
-OTHER_PROGRAMS := hello-world-c
+C_PROGRAMS := hello-world-c
 
 # Default target
-all: $(PROGRAMS_32) $(PROGRAMS_64) $(OTHER_PROGRAMS)
+all: $(PROGRAMS_32) $(PROGRAMS_64) $(C_PROGRAMS)
 
 # Clean up build artefacts
 .PHONY: clean
@@ -36,7 +36,7 @@ clean:
 # Build artefacts
 build:
 	mkdir build
-$(PROGRAMS_32) $(PROGRAMS_64) $(OTHER_PROGRAMS): | build
+$(PROGRAMS_32) $(PROGRAMS_64) $(C_PROGRAMS): | build
 exit: 03-exit.s
 	as $(DEBUG_ARGS) $(AS_ARGS_32) -o build/$@.o $<
 	ld $(DEBUG_ARGS) $(LD_ARGS_32) -o build/$@ build/$@.o

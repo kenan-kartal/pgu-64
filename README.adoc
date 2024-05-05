@@ -28,6 +28,8 @@ Then you can build the repository with:
 $ make
 ----
 
+In order to enable debug symbols, modify the `DEBUG_ARGS` variable in `Makefile`.
+
 == Test
 
 Programs may be tested with the following command:
